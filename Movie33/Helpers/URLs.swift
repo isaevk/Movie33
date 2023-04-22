@@ -8,5 +8,7 @@
 import Foundation
 
 enum URLs {
-  static let urlFilms = ""
+  static let popular = "https://api.themoviedb.org/3/movie/popular?api_key=e9267ba4312e3b05fe2d10707de27a5f&language=en-US"
+  static let upcoming = "https://api.themoviedb.org/3/movie/upcoming?api_key=e9267ba4312e3b05fe2d10707de27a5f&language=en-US"
+  static let topRating = "https://api.themoviedb.org/3/movie/top_rated?api_key=e9267ba4312e3b05fe2d10707de27a5f&language=en-US"
 }

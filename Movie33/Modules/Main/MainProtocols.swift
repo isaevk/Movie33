@@ -2,54 +2,44 @@
 //  MainProtocols.swift
 //  Movie33
 //
-//  Created by Kirill Dev on 20.04.2023.
+//  Created by Kirill Dev on 22.04.2023.
 //
 
-//import Foundation
 import UIKit
 
-// MARK: - Configurator Protocol
+typealias EntryPoint = MainViewProtocol & UIViewController
 
-protocol MainConfiguratorProtocol: AnyObject {
-  func configure(with viewController: MainViewController)
+// MARK: - View
+
+protocol MainViewProtocol {
+  var presenter: MainPresenterProtocol? { get set }
+  
+  func update(with films: [Film])
+  func update(with error: String)
 }
 
-// MARK: - Router Protocol
+// MARK: - Interactor
 
-protocol MainRouterProtocol: AnyObject {
-  func openBurgerMenu()
+protocol MainInteractorProtocol {
+  var presenter: MainPresenterProtocol? { get set }
+  
+  func getFilms()
 }
 
-// MARK: - Presenter Protocol
+// MARK: - Presenter
 
-protocol MainPresenterProtocol: AnyObject {
+protocol MainPresenterProtocol {
   var view: MainViewProtocol? { get set }
-  var router: MainRouterProtocol? { get set }
   var interactor: MainInteractorProtocol? { get set }
+  var router: MainRouterProtocol? { get set }
   
-  func configureView()
-  func burgerButtonClicked()
-  func filmClicked(with item: String)
+  func didFetchFilms(with result: Result<[Film], Error>)
 }
 
+// MARK: - Router
 
-// MARK: - View Protocol
-
-protocol MainViewProtocol: AnyObject {
-  var presenter: MainPresenterProtocol? { get set }
+protocol MainRouterProtocol {
+  var entry: EntryPoint? { get }
   
-  func setBackgroundView(with color: UIColor)
-  func setBurgerSidemenu(with navItem: UINavigationItem)
+  static func start() -> MainRouterProtocol
 }
-
-// MARK: - Interactor Protocol
-
-protocol MainInteractorProtocol: AnyObject {
-  var presenter: MainPresenterProtocol? { get set }
-  
-  var setBackgroundColor: UIColor { get }
-  
-  func openAboutFilm(with urlString: String)
-}
-
-

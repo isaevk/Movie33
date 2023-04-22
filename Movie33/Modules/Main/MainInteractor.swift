@@ -2,33 +2,36 @@
 //  MainInteractor.swift
 //  Movie33
 //
-//  Created by Kirill Dev on 20.04.2023.
+//  Created by Kirill Dev on 22.04.2023.
 //
 
-import UIKit
+import Foundation
 
 final class MainInteractor: MainInteractorProtocol {
-//  var presenter: MainPresenter?
+  var presenter: MainPresenterProtocol?
   
   
-  weak var presenter: MainPresenterProtocol?
-//  let serverService: ServerServiceProtocol = .init()
-  
-  required init(presenter: MainPresenterProtocol!) {
-    self.presenter = presenter
-  }
-  
-  var setBackgroundColor: UIColor {
-    get {
-      return UIColor.white
+  // MARK: - Get Films
+  func getFilms() {
+    guard let url = URL(string: URLs.popular) else { return }
+    let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+      guard let data = data, error == nil else {
+        self?.presenter?.didFetchFilms(with: .failure(FetchError.falied))
+        return
+      }
+      
+      do {
+        let films = try JSONDecoder().decode([Film].self, from: data)
+        self?.presenter?.didFetchFilms(with: .success(films))
+      }
+      catch {
+        
+        self?.presenter?.didFetchFilms(with: .failure(error))
+      }
+      
     }
-  }
-  
-  
-  
-  
-  func openAboutFilm(with urlString: String) {
-    //
+    
+    task.resume()
   }
   
   
