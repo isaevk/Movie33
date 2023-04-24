@@ -23,8 +23,12 @@ final class FilmCollectionViewCell: UICollectionViewCell {
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupConstraints()
-    backgroundColor = .black
-    posterImageView.image = UIImage(systemName: "star")
+    backgroundColor = .red
+    
+    
+    filmNameLabel.font = .boldSystemFont(ofSize: 10)
+    filmNameLabel.textColor = .white
+    
   }
   
   @available(*, unavailable)
@@ -44,18 +48,31 @@ final class FilmCollectionViewCell: UICollectionViewCell {
 //      posterImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
 //      posterImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
 //      posterImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
-//      posterImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8)
-      
-      filmNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-      filmNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-      filmNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
-      filmNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8)
+//      posterImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8),
+      posterImageView.widthAnchor.constraint(equalToConstant: 100),
+      posterImageView.heightAnchor.constraint(equalToConstant: 100),
+            filmNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            filmNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            filmNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
+            filmNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8),
+      filmNameLabel.heightAnchor.constraint(equalToConstant:  30),
+      filmNameLabel.widthAnchor.constraint(equalToConstant: 100)
     ])
   }
   
   // MARK: - Public methods
   
   func confugure(with film: Film) {
-    filmNameLabel.text = film.originalTitle
+    ImageDownloaderManager.shared.fetchImage(from: film.posterPath) { result in
+      switch result {
+      case .success(let image):
+        self.posterImageView.image = image
+      case .failure:
+        self.posterImageView.image = UIImage(systemName: "shareplay.slash")
+      }
+    }
+    guard let name = film.originalTitle else { return }
+          filmNameLabel.text = name
+    }
   }
-}
+

@@ -7,6 +7,12 @@
 
 import Foundation
 
+protocol MainInteractorProtocol {
+  var presenter: MainPresenterProtocol? { get set }
+  
+  func getFilms()
+}
+
 final class MainInteractor: MainInteractorProtocol {
   var presenter: MainPresenterProtocol?
   
@@ -14,25 +20,28 @@ final class MainInteractor: MainInteractorProtocol {
   // MARK: - Get Films
   func getFilms() {
     guard let url = URL(string: URLs.popular) else { return }
-    let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+    
+    let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
       guard let data = data, error == nil else {
         self?.presenter?.didFetchFilms(with: .failure(FetchError.falied))
         return
       }
       
       do {
-        let films = try JSONDecoder().decode([Film].self, from: data)
-        self?.presenter?.didFetchFilms(with: .success(films))
+        let films = try JSONDecoder().decode(Page.self, from: data)
+        print(films.results.count)
+        self?.presenter?.didFetchFilms(with: .success(films.results))
+
       }
       catch {
-        
+        print("error")
         self?.presenter?.didFetchFilms(with: .failure(error))
       }
-      
     }
     
     task.resume()
   }
-  
+  // Get popular
+  // Get top
   
 }

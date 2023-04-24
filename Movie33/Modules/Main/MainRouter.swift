@@ -7,20 +7,31 @@
 
 import UIKit
 
+protocol MainRouterProtocol {
+  var entry: EntryPoint? { get }
+  
+  static func start() -> MainRouterProtocol
+}
+
+// Router
 final class MainRouter: MainRouterProtocol {
   var entry: EntryPoint?
   
   static func start() -> MainRouterProtocol {
+    let router: MainRouter = MainRouter()
+    
     var view: MainViewProtocol = MainViewController()
-    var interactor: MainInteractorProtocol = MainInteractor()
     var presenter: MainPresenterProtocol = MainPresenter()
-    let router = MainRouter()
+    var interactor: MainInteractorProtocol = MainInteractor()
+
     
     view.presenter = presenter
+    
     interactor.presenter = presenter
-    presenter.router = router
+//    interactor.getFilms()
     presenter.router = router
     presenter.view = view
+    presenter.interactor = interactor
     router.entry = view as? EntryPoint
     
     return router

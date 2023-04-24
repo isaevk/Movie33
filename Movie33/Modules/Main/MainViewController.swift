@@ -7,11 +7,22 @@
 
 import UIKit
 
+protocol MainViewProtocol {
+  var presenter: MainPresenterProtocol?  { get set }
+  
+  func update(with films: [Film])
+  func update(with1 error: String)
+}
+
+
+
+
+
 final class MainViewController: UIViewController {
   // MARK: - Public Properties
   
   var presenter: MainPresenterProtocol?
-  var films = [Film]()
+  var films: [Film] = []
   
   // MARK: - Private Properties
 
@@ -21,31 +32,22 @@ final class MainViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    setupCollectionView()
     
     view.backgroundColor = .systemBlue
     navigationController?.navigationBar.backgroundColor = .red
-    setupCollectionView()
   }
   
-  func update(with films: [Film]) {
-    print("got films")
-    DispatchQueue.main.async {
-      self.films = films
-      self.filmsCollectionView.reloadData()
-    }
+  override func viewDidLayoutSubviews()  {
+    super.viewDidLayoutSubviews()
+    setupConstraints()
   }
+
+  
   
   // MARK: - Private Methods
   
-  private func setupCollectionView() {
-    filmsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: setupCollectionViewLaout())
-    filmsCollectionView.register(FilmCollectionViewCell.self, forCellWithReuseIdentifier: FilmCollectionViewCell.identifier)
-    
-    filmsCollectionView.dataSource = self
-    filmsCollectionView.delegate = self
-    
-    view.addSubview(filmsCollectionView)
-    
+  private func setupConstraints() {
     filmsCollectionView.translatesAutoresizingMaskIntoConstraints = false
 
     NSLayoutConstraint.activate([
@@ -54,6 +56,17 @@ final class MainViewController: UIViewController {
       filmsCollectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
       filmsCollectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
     ])
+  }
+  
+  // Setup Collection View
+  private func setupCollectionView() {
+    filmsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: setupCollectionViewLaout())
+    filmsCollectionView.register(FilmCollectionViewCell.self, forCellWithReuseIdentifier: FilmCollectionViewCell.identifier)
+    filmsCollectionView.isHidden = true
+    filmsCollectionView.dataSource = self
+    filmsCollectionView.delegate = self
+    view.addSubview(filmsCollectionView)
+    
   }
 
   // Layout
@@ -64,37 +77,32 @@ final class MainViewController: UIViewController {
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     return layout
   }
-
-  
 }
 
 // MARK: - AnyView
 
 extension MainViewController: MainViewProtocol {
-
-//  func update(with films: [Film]) {
-//    print("got films")
-//    DispatchQueue.main.async {
-//      self.films = films
-////      self.filmsCollectionView.reloadData()
-//    }
-//  }
-
-  func update(with error: String) {
-    print(error)
+  func update(with films: [Film]) {
+    print("got films")
+    DispatchQueue.main.async {
+      self.films = films
+      self.filmsCollectionView.reloadData()
+      self.filmsCollectionView.isHidden = false
+    }
   }
 
-
+  func update(with1 error: String) {
+    print(error)
+  }
 }
-
 
 // MARK: - UICollectionViewDataSource
 
 extension MainViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    print(films.count)
     return films.count
-    
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -102,10 +110,6 @@ extension MainViewController: UICollectionViewDataSource {
     filmCell.confugure(with: films[indexPath.row])
     return filmCell
   }
-  
-  
-  
-  
 }
 
 

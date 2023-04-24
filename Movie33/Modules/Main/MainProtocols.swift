@@ -11,35 +11,35 @@ typealias EntryPoint = MainViewProtocol & UIViewController
 
 // MARK: - View
 
-protocol MainViewProtocol {
-  var presenter: MainPresenterProtocol? { get set }
-  
-  func update(with films: [Film])
-  func update(with error: String)
-}
+//protocol MainViewProtocol {
+//  var presenter: MainPresenterProtocol?  { get set }
+//  
+//  func update(with films: [Film])
+//  func update(with1 error: String)
+//}
 
 // MARK: - Interactor
 
-protocol MainInteractorProtocol {
-  var presenter: MainPresenterProtocol? { get set }
-  
-  func getFilms()
-}
+//protocol MainInteractorProtocol {
+//  var presenter: MainPresenterProtocol? { get set }
+//  
+//  func getFilms()
+//}
 
 // MARK: - Presenter
 
-protocol MainPresenterProtocol {
-  var view: MainViewProtocol? { get set }
-  var interactor: MainInteractorProtocol? { get set }
-  var router: MainRouterProtocol? { get set }
-  
-  func didFetchFilms(with result: Result<[Film], Error>)
-}
+//protocol MainPresenterProtocol {
+//  var router: MainRouterProtocol? { get set }
+//  var interactor: MainInteractorProtocol? { get set }
+//  var view: MainViewProtocol? { get set }
+//  
+//  func didFetchFilms(with result: Result<[Film], Error>)
+//}
 
 // MARK: - Router
 
-protocol MainRouterProtocol {
-  var entry: EntryPoint? { get }
-  
-  static func start() -> MainRouterProtocol
-}
+//protocol MainRouterProtocol {
+//  var entry: EntryPoint? { get }
+//  
+//  static func start() -> MainRouterProtocol
+//}

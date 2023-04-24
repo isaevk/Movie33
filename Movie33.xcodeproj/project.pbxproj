@@ -25,6 +25,8 @@
 		1827E70329F41D8F00BB581D /* AboutEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1827E70229F41D8F00BB581D /* AboutEntity.swift */; };
 		1827E70529F41DA300BB581D /* AboutRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1827E70429F41DA300BB581D /* AboutRouter.swift */; };
 		1827E70729F41DB300BB581D /* AboutProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1827E70629F41DB300BB581D /* AboutProtocols.swift */; };
+		1827E70929F6651900BB581D /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1827E70829F6651900BB581D /* NetworkLayer.swift */; };
+		1827E70B29F66DF600BB581D /* ImageDownloaderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1827E70A29F66DF600BB581D /* ImageDownloaderManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		1827E70229F41D8F00BB581D /* AboutEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutEntity.swift; sourceTree = "<group>"; };
 		1827E70429F41DA300BB581D /* AboutRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutRouter.swift; sourceTree = "<group>"; };
 		1827E70629F41DB300BB581D /* AboutProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutProtocols.swift; sourceTree = "<group>"; };
+		1827E70829F6651900BB581D /* NetworkLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLayer.swift; sourceTree = "<group>"; };
+		1827E70A29F66DF600BB581D /* ImageDownloaderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,8 @@
 			isa = PBXGroup;
 			children = (
 				1827E6E229F130EF00BB581D /* URLs.swift */,
+				1827E70829F6651900BB581D /* NetworkLayer.swift */,
+				1827E70A29F66DF600BB581D /* ImageDownloaderManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -221,6 +227,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1827E70B29F66DF600BB581D /* ImageDownloaderManager.swift in Sources */,
 				1827E6F329F3B7F400BB581D /* MainEntity.swift in Sources */,
 				1827E70529F41DA300BB581D /* AboutRouter.swift in Sources */,
 				1827E6BA29F11A2400BB581D /* AppDelegate.swift in Sources */,
@@ -232,6 +239,7 @@
 				1827E6FF29F41D6A00BB581D /* AboutInteractor.swift in Sources */,
 				1827E6F729F3B9B000BB581D /* MainViewController.swift in Sources */,
 				1827E6BC29F11A2400BB581D /* SceneDelegate.swift in Sources */,
+				1827E70929F6651900BB581D /* NetworkLayer.swift in Sources */,
 				1827E6EF29F3B78200BB581D /* MainPresenter.swift in Sources */,
 				1827E6EA29F156D300BB581D /* FilmCollectionViewCell.swift in Sources */,
 				1827E6F129F3B79600BB581D /* MainInteractor.swift in Sources */,
