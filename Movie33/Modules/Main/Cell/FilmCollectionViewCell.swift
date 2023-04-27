@@ -6,29 +6,19 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class FilmCollectionViewCell: UICollectionViewCell {
   static let identifier = "FilmCell"
   
   // MARK: - Private Properties
-  
   private let posterImageView = UIImageView()
-  private let filmNameLabel = UILabel()
-  private let loglineLabel = UILabel()
   private let ratingLabel = UILabel()
-  private let releaseDateLabel = UILabel()
   
-  // MARK: - Override methods
-  
+  // MARK: - Override init
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setupConstraints()
-    backgroundColor = .red
-    
-    
-    filmNameLabel.font = .boldSystemFont(ofSize: 10)
-    filmNameLabel.textColor = .white
-    
+    setupView()
   }
   
   @available(*, unavailable)
@@ -36,43 +26,74 @@ final class FilmCollectionViewCell: UICollectionViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
+  // MARK: - Override methods
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    setupConstraints()
+  }
+
   // MARK: - Private Methods
+  private func setupView() {
+    setupUI()
+  }
   
+  // MARK: - Public methods
+  func confugure(with movie: Movie) {
+    guard let image = movie.poster_path,
+    let rating = movie.vote_average else {
+      posterImageView.image = UIImage(systemName: "shareplay.slash")
+      ratingLabel.text = "Error"
+      return
+    }
+    
+    guard let url = URL(string: "\(URLs.image)\(image)") else { return }
+    posterImageView.kf.setImage(with: url)
+    
+    ratingLabel.text = String(rating)
+  }
+}
+
+// MARK: - Settings
+
+private extension  FilmCollectionViewCell {
+  
+  // Constraints
   private func setupConstraints() {
-    [posterImageView, filmNameLabel, loglineLabel, ratingLabel, releaseDateLabel].forEach {
+    [posterImageView, ratingLabel].forEach {
       contentView.addSubview($0)
       $0.translatesAutoresizingMaskIntoConstraints = false
     }
     
     NSLayoutConstraint.activate([
-//      posterImageView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-//      posterImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-//      posterImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
-//      posterImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8),
-      posterImageView.widthAnchor.constraint(equalToConstant: 100),
-      posterImageView.heightAnchor.constraint(equalToConstant: 100),
-            filmNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            filmNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            filmNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 8),
-            filmNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 8),
-      filmNameLabel.heightAnchor.constraint(equalToConstant:  30),
-      filmNameLabel.widthAnchor.constraint(equalToConstant: 100)
+      posterImageView.topAnchor.constraint(equalTo: topAnchor),
+      posterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+      posterImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
+      posterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+      
+      ratingLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+      ratingLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+      ratingLabel.widthAnchor.constraint(equalToConstant: 40),
+      ratingLabel.heightAnchor.constraint(equalToConstant: 40)
     ])
   }
   
-  // MARK: - Public methods
-  
-  func confugure(with film: Film) {
-    ImageDownloaderManager.shared.fetchImage(from: film.posterPath) { result in
-      switch result {
-      case .success(let image):
-        self.posterImageView.image = image
-      case .failure:
-        self.posterImageView.image = UIImage(systemName: "shareplay.slash")
-      }
-    }
-    guard let name = film.originalTitle else { return }
-          filmNameLabel.text = name
-    }
-  }
+  // UI
+  func setupUI() {
+    backgroundColor = .systemCyan
+    
+    posterImageView.clipsToBounds = true
+    posterImageView.layer.cornerRadius = 25
+    posterImageView.contentMode = .scaleAspectFill
+    
+    let size: CGFloat = 35.0
 
+    ratingLabel.bounds = CGRectMake(0.0, 0.0, size, size)
+    ratingLabel.layer.cornerRadius = size / 2
+    ratingLabel.layer.borderWidth = 2.0
+    ratingLabel.layer.backgroundColor = UIColor.clear.cgColor
+    ratingLabel.layer.borderColor = UIColor.systemYellow.cgColor
+    ratingLabel.textAlignment = .center
+    ratingLabel.font = .boldSystemFont(ofSize: 18)
+    ratingLabel.textColor = .white
+  }
+}

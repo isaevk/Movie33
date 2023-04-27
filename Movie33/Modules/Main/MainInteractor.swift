@@ -5,43 +5,54 @@
 //  Created by Kirill Dev on 22.04.2023.
 //
 
-import Foundation
+import UIKit
 
+// MARK: - Main Interactor Protocol
 protocol MainInteractorProtocol {
   var presenter: MainPresenterProtocol? { get set }
   
-  func getFilms()
+  func getPopularMovies()
+  func getUpcomingMovies()
+  func getTopRatingMovies()
 }
 
+// MARK: - Main Interactor Class
 final class MainInteractor: MainInteractorProtocol {
   var presenter: MainPresenterProtocol?
   
-  
-  // MARK: - Get Films
-  func getFilms() {
-    guard let url = URL(string: URLs.popular) else { return }
-    
-    let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
-      guard let data = data, error == nil else {
-        self?.presenter?.didFetchFilms(with: .failure(FetchError.falied))
-        return
-      }
-      
-      do {
-        let films = try JSONDecoder().decode(Page.self, from: data)
-        print(films.results.count)
-        self?.presenter?.didFetchFilms(with: .success(films.results))
-
-      }
-      catch {
-        print("error")
-        self?.presenter?.didFetchFilms(with: .failure(error))
+  // Get popular Movies
+  func getPopularMovies() {
+    APICaller.shared.getPopularMovies { [weak self] results in
+      switch results {
+      case .success(let movies):
+        self?.presenter?.didFetchMovie(with: .success(movies))
+      case .failure:
+        self?.presenter?.didFetchMovie(with: .failure(NetworkError.failedTogetData))
       }
     }
-    
-    task.resume()
   }
-  // Get popular
-  // Get top
   
+  // Get Upcoming Movies
+  func getUpcomingMovies() {
+    APICaller.shared.getUpcomingMovies { [weak self] results in
+      switch results {
+      case .success(let movies):
+        self?.presenter?.didFetchMovie(with: .success(movies))
+      case .failure:
+        self?.presenter?.didFetchMovie(with: .failure(NetworkError.failedTogetData))
+      }
+    }
+  }
+  
+  // Get Top Rating Movies
+  func getTopRatingMovies() {
+    APICaller.shared.getTopRatingMovies { [weak self] results in
+      switch results {
+      case .success(let movies):
+        self?.presenter?.didFetchMovie(with: .success(movies))
+      case .failure:
+        self?.presenter?.didFetchMovie(with: .failure(NetworkError.failedTogetData))
+      }
+    }
+  }
 }

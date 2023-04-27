@@ -7,24 +7,18 @@
 
 import Foundation
 
-enum URLs {
-  static let baseURL = "https://api.themoviedb.org/3/movie/"
-  static let api_key = "api_key=e9267ba4312e3b05fe2d10707de27a5f"
-  static let languageEn = "&language=en-US"
+struct URLs {
+  static let tokenTMDB = "e9267ba4312e3b05fe2d10707de27a5f"
+  static let baseTMDB = "https://api.themoviedb.org"
+  static let languageEN = "&language=en-US"
+  static let image = "https://image.tmdb.org/t/p/w500/"
   
-  static let popular = "https://api.themoviedb.org/3/movie/popular?api_key=e9267ba4312e3b05fe2d10707de27a5f&language=en-US"
-  static let upcoming = "https://api.themoviedb.org/3/movie/upcoming?api_key=e9267ba4312e3b05fe2d10707de27a5f&language=en-US"
-  static let topRating = "https://api.themoviedb.org/3/movie/top_rated?api_key=e9267ba4312e3b05fe2d10707de27a5f&language=en-US"
+  static let popularMovies = "/3/movie/popular?api_key="
+  static let upcomingMovies = "/3/movie/upcoming?api_key="
+  static let topRatingMovies = "/3/movie/top_rated?api_key="
   
+  static let tokenYouTube = "AIzaSyApQQwJgpIEIhBndat65VnTazJ4NegErwU"
+  static let baseYouTubeSearch = "https://youtube.googleapis.com/youtube/v3/search?"
+  static let baseYouTubeView = "https://www.youtube.com/embed/"
 }
 
-enum ClassificationFilms {
-  static let popular = "popular?"
-  static let upcoming = "upcoming?"
-  static let topRating = "topRating?"
-}
-
-
-final class NetWorkMeneger {
-  
-}
