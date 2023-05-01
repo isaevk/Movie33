@@ -1,5 +1,5 @@
 //
-//  APICaller.swift
+//  NetworkManager.swift
 //  Movie33
 //
 //  Created by Kirill Dev on 26.04.2023.
@@ -12,9 +12,17 @@ enum NetworkError: Error {
   case failedTogetData
 }
 
+// MARK: - NetworkManagerProtocol
+protocol NetworkManagerProtocol {
+  func getPopularMovies(complition: @escaping (Result<[Movie], Error>) -> Void)
+  func getUpcomingMovies(complition: @escaping (Result<[Movie], Error>) -> Void)
+  func getTopRatingMovies(complition: @escaping (Result<[Movie], Error>) -> Void)
+  func getMovieOnYouTube(with query: String, complition: @escaping (Result<Video, Error>) -> Void)
+  
+}
+
 // MARK: - API Caller
-final class APICaller {
-  static let shared = APICaller()
+final class NetworkManager: NetworkManagerProtocol {
   
   // MARK: - Popular
   func getPopularMovies(complition: @escaping (Result<[Movie], Error>) -> Void) {

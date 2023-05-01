@@ -26,12 +26,7 @@ protocol MainPresenterProtocol {
 final class MainPresenter: MainPresenterProtocol {
   var router: MainRouterProtocol?
   var view: MainViewProtocol?
-  
-  var interactor: MainInteractorProtocol? {
-    didSet {
-      self.interactor?.getPopularMovies()
-    }
-  }
+  var interactor: MainInteractorProtocol?
   
   // First fetching
   func didFetchMovie(with result: Result<[Movie], Error>) {

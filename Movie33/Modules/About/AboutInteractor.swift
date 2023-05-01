@@ -10,6 +10,7 @@ import Foundation
 // MARK: - About Interactor Protocol
 protocol AboutInteractorProtocol {
   var presenter: AboutPresenterProtocol? { get set }
+  var networkManager: NetworkManagerProtocol? { get set }
   
   func getTrailers(movieName: String)
 }
@@ -17,9 +18,10 @@ protocol AboutInteractorProtocol {
 // MARK: - About Interactor Class
 final class AboutInteractor: AboutInteractorProtocol {
   var presenter: AboutPresenterProtocol?
+  var networkManager: NetworkManagerProtocol?
   
   func getTrailers(movieName: String) {
-    APICaller.shared.getMovieOnYouTube(with: movieName + " trailer") { [weak self] result in
+    networkManager?.getMovieOnYouTube(with: movieName + " trailer") { [weak self] result in
       switch result {
       case .success(let video):
         self?.presenter?.didFetchTrailer(with: .success(video))

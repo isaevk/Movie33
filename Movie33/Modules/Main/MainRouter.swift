@@ -23,12 +23,15 @@ final class MainRouter: MainRouterProtocol {
   
   static func start() -> MainRouterProtocol {
     let router: MainRouter = MainRouter()
+    let networkManager: NetworkManagerProtocol = NetworkManager()
     var view: MainViewProtocol = MainViewController()
     var presenter: MainPresenterProtocol = MainPresenter()
-    var interactor: MainInteractorProtocol = MainInteractor()
-
+    var interactor: MainInteractorProtocol = MainInteractor(networkManager: networkManager)!
+    
     view.presenter = presenter
+    view.networkManager = networkManager
     interactor.presenter = presenter
+    interactor.networkManager = networkManager
     presenter.router = router
     presenter.view = view
     presenter.interactor = interactor

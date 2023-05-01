@@ -25,7 +25,7 @@
 		1827E70529F41DA300BB581D /* AboutRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1827E70429F41DA300BB581D /* AboutRouter.swift */; };
 		1827E71029F7B88B00BB581D /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1827E70F29F7B88B00BB581D /* UILabel+.swift */; };
 		1827E71329F7E6A600BB581D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1827E71229F7E6A600BB581D /* Kingfisher */; };
-		18C227AA29F907BC004EB833 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C227A929F907BB004EB833 /* APICaller.swift */; };
+		18C227AA29F907BC004EB833 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C227A929F907BB004EB833 /* NetworkManager.swift */; };
 		18D81AFD29F97F25002CC9EC /* YouTubeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D81AFC29F97F25002CC9EC /* YouTubeResponse.swift */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +49,7 @@
 		1827E70229F41D8F00BB581D /* AboutMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutMovie.swift; sourceTree = "<group>"; };
 		1827E70429F41DA300BB581D /* AboutRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutRouter.swift; sourceTree = "<group>"; };
 		1827E70F29F7B88B00BB581D /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
-		18C227A929F907BB004EB833 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
+		18C227A929F907BB004EB833 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		18D81AFC29F97F25002CC9EC /* YouTubeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouTubeResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,7 +166,7 @@
 		18C227A829F90797004EB833 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				18C227A929F907BB004EB833 /* APICaller.swift */,
+				18C227A929F907BB004EB833 /* NetworkManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -258,7 +258,7 @@
 			files = (
 				1827E71029F7B88B00BB581D /* UILabel+.swift in Sources */,
 				1827E6F329F3B7F400BB581D /* MovieResponse.swift in Sources */,
-				18C227AA29F907BC004EB833 /* APICaller.swift in Sources */,
+				18C227AA29F907BC004EB833 /* NetworkManager.swift in Sources */,
 				1827E70529F41DA300BB581D /* AboutRouter.swift in Sources */,
 				18D81AFD29F97F25002CC9EC /* YouTubeResponse.swift in Sources */,
 				1827E6BA29F11A2400BB581D /* AppDelegate.swift in Sources */,

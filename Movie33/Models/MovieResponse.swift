@@ -8,8 +8,12 @@
 import Foundation
 
 // MARK: - MovieResponse Model
-struct MovieResponse: Codable {
+struct MovieResponse: Codable  {
     let results: [Movie]
+  
+  enum CodingKeys: String, CodingKey {
+      case results
+  }
 }
 
 // MARK: - Movie Model
@@ -19,11 +23,22 @@ struct Movie: Codable, Hashable {
   /// Сюжет
   let overview: String?
   /// Постер
-  let poster_path: String?
+  let posterPath: String?
   /// Дата релиза
-  let release_date: String?
+  let releaseDate: String?
   /// Оригинальное название
-  let original_title: String?
+  let originalTitle: String?
   /// Рейтинг
-  let vote_average: Double?
+  let voteAverage: Double?
+  
+  enum CodingKeys: String, CodingKey {
+    case title
+    case overview
+    case posterPath = "poster_path"
+    case releaseDate = "release_date"
+    case originalTitle = "original_title"
+    case voteAverage = "vote_average"
+  }
+
 }
+

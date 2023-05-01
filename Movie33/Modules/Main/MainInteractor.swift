@@ -10,6 +10,7 @@ import UIKit
 // MARK: - Main Interactor Protocol
 protocol MainInteractorProtocol {
   var presenter: MainPresenterProtocol? { get set }
+  var networkManager: NetworkManagerProtocol? { get set }
   
   func getPopularMovies()
   func getUpcomingMovies()
@@ -19,10 +20,24 @@ protocol MainInteractorProtocol {
 // MARK: - Main Interactor Class
 final class MainInteractor: MainInteractorProtocol {
   var presenter: MainPresenterProtocol?
+  var networkManager: NetworkManagerProtocol?
+  
+  init?(networkManager: NetworkManagerProtocol) {
+    self.networkManager = networkManager.getTopRatingMovies(complition: { [weak self] results in
+      switch results {
+      case .success(let movies):
+        self?.presenter?.didFetchMovie(with: .success(movies))
+      case .failure:
+        self?.presenter?.didFetchMovie(with: .failure(NetworkError.failedTogetData))
+      }
+    }) as? any NetworkManagerProtocol
+  }
+                                                            
+  
   
   // Get popular Movies
   func getPopularMovies() {
-    APICaller.shared.getPopularMovies { [weak self] results in
+    networkManager?.getPopularMovies { [weak self] results in
       switch results {
       case .success(let movies):
         self?.presenter?.didFetchMovie(with: .success(movies))
@@ -34,7 +49,7 @@ final class MainInteractor: MainInteractorProtocol {
   
   // Get Upcoming Movies
   func getUpcomingMovies() {
-    APICaller.shared.getUpcomingMovies { [weak self] results in
+    networkManager?.getUpcomingMovies { [weak self] results in
       switch results {
       case .success(let movies):
         self?.presenter?.didFetchMovie(with: .success(movies))
@@ -46,7 +61,7 @@ final class MainInteractor: MainInteractorProtocol {
   
   // Get Top Rating Movies
   func getTopRatingMovies() {
-    APICaller.shared.getTopRatingMovies { [weak self] results in
+    networkManager?.getTopRatingMovies { [weak self] results in
       switch results {
       case .success(let movies):
         self?.presenter?.didFetchMovie(with: .success(movies))

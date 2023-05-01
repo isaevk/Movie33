@@ -10,6 +10,7 @@ import UIKit
 // MARK: - Main View Protocol
 protocol MainViewProtocol {
   var presenter: MainPresenterProtocol?  { get set }
+  var networkManager: NetworkManagerProtocol? { get set }
   
   func update(with movies: [Movie])
   func update(with error: String)
@@ -20,6 +21,7 @@ final class MainViewController: UIViewController {
   
   // MARK: - Public Properties
   var presenter: MainPresenterProtocol?
+  var networkManager: NetworkManagerProtocol? 
   
   // MARK: - Private Properties
   private var filmsCollectionView: UICollectionView!
@@ -184,10 +186,10 @@ extension MainViewController: UICollectionViewDataSource {
     
     guard let movieName = movie.title,
           let movieOverview = movie.overview,
-          let movieOrifinalName = movie.original_title,
-          let movieReleseDate = movie.release_date else { return }
+          let movieOrifinalName = movie.originalTitle,
+          let movieReleseDate = movie.releaseDate else { return }
     
-    APICaller.shared.getMovieOnYouTube(with: movieName + " trailer") { [weak self] result in
+    networkManager?.getMovieOnYouTube(with: movieName + " trailer") { [weak self] result in
       switch result {
       case .success(let video):
         let videoModel = AboutMovie(nameMovie: movieName, originalName: movieOrifinalName , releaseDate: movieReleseDate,overviewMovie: movieOverview, youtubeView: video)

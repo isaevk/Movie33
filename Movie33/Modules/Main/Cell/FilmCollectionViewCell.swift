@@ -39,8 +39,8 @@ final class FilmCollectionViewCell: UICollectionViewCell {
   
   // MARK: - Public methods
   func confugure(with movie: Movie) {
-    guard let image = movie.poster_path,
-    let rating = movie.vote_average else {
+    guard let image = movie.posterPath,
+    let rating = movie.voteAverage else {
       posterImageView.image = UIImage(systemName: "shareplay.slash")
       ratingLabel.text = "Error"
       return
